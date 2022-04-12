@@ -1,0 +1,40 @@
+syntax = "proto3";
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/Struct.proto";
+package auth;
+
+service AuthService {
+  rpc Register (RegisterRequest) returns (RegisterResponse) {}
+  rpc Login (LoginRequest) returns (LoginResponse) {}
+}
+
+// Register
+message RegisterRequest {
+  string email = 1;
+  string username = 2;
+  string password = 3;
+  string passwordConfirmation = 4;
+}
+
+message RegisterResponse {
+  optional int32 status = 1;
+  string result = 2;
+  google.protobuf.Struct data = 3;
+  optional string message = 4;
+
+  // google.protobuf.Value errors = 4;
+  // optional string message = 5;
+}
+
+// Login
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  int32 status = 1;
+  repeated string error = 2;
+  string accessToken = 3;
+  string refreshToken = 4;
+}
